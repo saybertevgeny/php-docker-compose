@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  php:
+    container_name: php
+    image: php:local
+    volumes:
+      -  ../laravelfirstrest/:/srv/application
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      - ./apache/:/etc/apache2/sites-enabled/
+    ports:
+      - 2000:80
+  db:
+    image: percona:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+    volumes:
+      - ./db/db_data:/var/lib/mysql
+      - ./db/conf:/etc/mysql/conf.d/custom.cnf
+    ports:
+      - 3306:3306/tcp
